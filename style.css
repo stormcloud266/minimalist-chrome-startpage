@@ -24,6 +24,9 @@ body {
   width: 100vw;
   background-size: cover;
   background-position: center;
+
+  display: flex;
+  align-items: end;
 }
 
 .container {

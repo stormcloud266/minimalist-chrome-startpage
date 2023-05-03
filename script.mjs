@@ -1,3 +1,5 @@
+import { WEATHER_API_KEY } from "./variables.mjs";
+
 // elements
 const clock = document.getElementById("clock");
 const background = document.getElementById("background");
@@ -11,6 +13,7 @@ const image = {
 
 const start = () => {
   setBg();
+  // getWeather();
   body.classList = "fade";
   setInterval(
     (function setClock() {
@@ -45,11 +48,21 @@ const toDataURL = (url) =>
     );
 
 const saveNextImage = () => {
-  toDataURL("https://source.unsplash.com/collection/2310706/2400x1600").then(
-    (dataUrl) => {
-      localStorage.setItem("bgImage", dataUrl);
-    }
-  );
+  toDataURL(
+    "https://crossorigin.me/https://source.unsplash.com/collection/2310706/2400x1600"
+  ).then((dataUrl) => {
+    localStorage.setItem("bgImage", dataUrl);
+  });
 };
+
+// const getWeather = async () => {
+//   const url = new URL("https://api.openweathermap.org/data/3.0/onecall");
+//   url.searchParams.set("lat", "44.526340");
+//   url.searchParams.set("lon", "-109.056534");
+//   url.searchParams.set("appid", WEATHER_API_KEY);
+
+//   const results = await fetch(url);
+//   console.log("results: ", results);
+// };
 
 start();
