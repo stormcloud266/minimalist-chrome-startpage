@@ -62,7 +62,6 @@ body {
 }
 
 #icon {
-  width: 36px;
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.35));
   margin-right: 4px;
 }

@@ -58,7 +58,7 @@ const getWeather = async () => {
   const results = await fetch(url);
   const data = await results.json();
 
-  icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+  icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
   temp.innerText = `${Math.round(data.main.temp)}°`;
   conditions.innerText = `- ${data.weather[0].description}`;
   weather.classList = "fade";
