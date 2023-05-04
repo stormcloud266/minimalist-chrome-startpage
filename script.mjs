@@ -3,6 +3,10 @@ import { WEATHER_API_KEY } from "./variables.mjs";
 // elements
 const clock = document.getElementById("clock");
 const background = document.getElementById("background");
+const icon = document.getElementById("icon");
+const temp = document.getElementById("temp");
+const conditions = document.getElementById("conditions");
+const weather = document.getElementById("weather");
 const body = document.getElementsByTagName("BODY")[0];
 
 const image = {
@@ -13,7 +17,8 @@ const image = {
 
 const start = () => {
   setBg();
-  // getWeather();
+  getWeather();
+
   body.classList = "fade";
   setInterval(
     (function setClock() {
@@ -34,35 +39,29 @@ const setBg = () => {
   }
 };
 
-const toDataURL = (url) =>
-  fetch(url)
-    .then((response) => response.blob())
-    .then(
-      (blob) =>
-        new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
-        })
-    );
-
-const saveNextImage = () => {
-  toDataURL(
-    "https://crossorigin.me/https://source.unsplash.com/collection/2310706/2400x1600"
-  ).then((dataUrl) => {
-    localStorage.setItem("bgImage", dataUrl);
-  });
+const fetchImageBase64 = async (url) => {
+  const response = await fetch(url);
+  const { imageData } = await response.json();
+  return imageData;
 };
 
-// const getWeather = async () => {
-//   const url = new URL("https://api.openweathermap.org/data/3.0/onecall");
-//   url.searchParams.set("lat", "44.526340");
-//   url.searchParams.set("lon", "-109.056534");
-//   url.searchParams.set("appid", WEATHER_API_KEY);
+const saveNextImage = async () => {
+  const data = await fetchImageBase64(
+    "https://misc-api-rose.vercel.app/api/image"
+  );
+  localStorage.setItem("bgImage", data);
+};
 
-//   const results = await fetch(url);
-//   console.log("results: ", results);
-// };
+const getWeather = async () => {
+  const url = new URL("https://misc-api-rose.vercel.app/api/weather");
+
+  const results = await fetch(url);
+  const data = await results.json();
+
+  icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+  temp.innerText = `${Math.round(data.main.temp)}°`;
+  conditions.innerText = `- ${data.weather[0].description}`;
+  weather.classList = "fade";
+};
 
 start();
