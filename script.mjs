@@ -5,7 +5,6 @@ const clock = document.getElementById("clock");
 const background = document.getElementById("background");
 const icon = document.getElementById("icon");
 const temp = document.getElementById("temp");
-const conditions = document.getElementById("conditions");
 const weather = document.getElementById("weather");
 const body = document.getElementsByTagName("BODY")[0];
 
@@ -60,7 +59,6 @@ const getWeather = async () => {
 
   icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
   temp.innerText = `${Math.round(data.main.temp)}°`;
-  conditions.innerText = `- ${data.weather[0].description}`;
   weather.classList = "fade";
 };
 
